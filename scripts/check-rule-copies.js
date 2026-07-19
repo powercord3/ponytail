@@ -56,11 +56,48 @@ const INVARIANTS = [
 ];
 
 const skill = read('skills/ponytail/SKILL.md');
-const sources = [['skills/ponytail/SKILL.md', skill], ['AGENTS.md', agents]];
+// The hook's hardcoded fallback is a rule copy like any other, and the only one
+// no check covered: it had already lost "naive heuristic" and "flimsier
+// algorithm" before this line was added. It fires only when SKILL.md is
+// unreadable, which is exactly why nobody notices it drifting.
+const { getFallbackInstructions } = require('../hooks/ponytail-instructions');
+const fallback = getFallbackInstructions('full');
+const sources = [
+  ['skills/ponytail/SKILL.md', skill],
+  ['AGENTS.md', agents],
+  ['hooks/ponytail-instructions.js (fallback)', fallback],
+];
 for (const phrase of INVARIANTS) {
   for (const [label, text] of sources) {
     if (!text.includes(phrase)) {
       console.error(`${label} is missing rule invariant: "${phrase}"`);
+      failed = true;
+    }
+  }
+}
+
+// The ladder is the skill's spine, and ponytail-help summarises it. That summary
+// had silently dropped rungs 2 and 5 — including "already in this codebase",
+// which SKILL.md itself calls the most common slop. Byte-comparing is wrong here
+// (a summary is meant to be shorter), so assert each rung's concept survives.
+const LADDER_RUNGS = [
+  ['yagni', /yagni/i],
+  ['already in this codebase', /already (in this codebase|here|exist)|reuse what/i],
+  ['stdlib', /stdlib|standard library/i],
+  ['native', /native/i],
+  ['already-installed dependency', /already-installed|installed dep/i],
+  ['one line', /one[- ]line/i],
+  ['minimum', /minimum/i],
+];
+const ladderSources = [
+  ['skills/ponytail/SKILL.md', skill],
+  ['skills/ponytail-help/SKILL.md', read('skills/ponytail-help/SKILL.md')],
+  ['hooks/ponytail-instructions.js (fallback)', fallback],
+];
+for (const [rung, pattern] of LADDER_RUNGS) {
+  for (const [label, text] of ladderSources) {
+    if (!pattern.test(text)) {
+      console.error(`${label} is missing ladder rung: "${rung}"`);
       failed = true;
     }
   }
@@ -71,4 +108,7 @@ if (failed) {
   process.exit(1);
 }
 
-console.log(`Rule copies match AGENTS.md; ${INVARIANTS.length} rule invariants present in SKILL.md and AGENTS.md.`);
+console.log(
+  `Rule copies match AGENTS.md; ${INVARIANTS.length} rule invariants present in ` +
+  `${sources.length} sources; all ${LADDER_RUNGS.length} ladder rungs present in ${ladderSources.length} sources.`
+);

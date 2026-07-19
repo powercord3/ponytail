@@ -1,22 +1,20 @@
 ---
 name: ponytail-help
-description: >
-  Quick-reference card for all ponytail modes, skills, and commands.
-  One-shot display, not a persistent mode. Trigger: /ponytail-help,
-  "ponytail help", "what ponytail commands", "how do I use ponytail".
+description: Quick-reference card for ponytail's levels, skills, and configuration.
+disable-model-invocation: true
 ---
 
 # Ponytail Help
 
-Display this reference card when invoked. One-shot, do NOT change mode,
-write flag files, or persist anything.
+Display only — leave the active mode, the flag file, and any stored state
+exactly as they were.
 
 ## Levels
 
 | Level | Trigger | What change |
 |-------|---------|-------------|
 | **Lite** | `/ponytail lite` | Build what's asked, name the lazier alternative in one line. |
-| **Full** | `/ponytail` | The ladder enforced: YAGNI → stdlib → native → one line → minimum. Default. |
+| **Full** | `/ponytail` | The ladder enforced: YAGNI → reuse what's already here → stdlib → native → installed dep → one line → minimum. Default. |
 | **Ultra** | `/ponytail ultra` | YAGNI extremist. Deletion before addition. Challenges requirements before building. |
 
 Level sticks until changed or session end.
@@ -26,7 +24,9 @@ Level sticks until changed or session end.
 | Skill | Trigger | What it does |
 |-------|---------|--------------|
 | **ponytail** | `/ponytail` | Lazy mode itself. Simplest solution that works. |
-| **ponytail-review** | `/ponytail-review` | Over-engineering review: `L42: yagni: factory, one product. Inline.` |
+| **ponytail-review** | `/ponytail-review` | Over-engineering review of a diff: `L42: yagni: factory, one product. Inline.` |
+| **ponytail-audit** | `/ponytail-audit` | Same review, whole repo instead of a diff. Ranked list of what to cut. |
+| **ponytail-debt** | `/ponytail-debt` | Harvests every `ponytail:` comment into a debt ledger. |
 | **ponytail-gain** | `/ponytail-gain` | Measured-impact scoreboard: less code, less cost, more speed. |
 | **ponytail-help** | `/ponytail-help` | This card. |
 

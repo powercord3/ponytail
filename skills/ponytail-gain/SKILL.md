@@ -1,17 +1,13 @@
 ---
 name: ponytail-gain
-description: >
-  Show ponytail's measured impact as a compact scoreboard: less code, less
-  cost, more speed, from the benchmark medians. One-shot display, not a
-  persistent mode, and not a per-repo number. Trigger: /ponytail-gain,
-  "ponytail gain", "what does ponytail save", "show ponytail impact",
-  "ponytail scoreboard".
+description: Scoreboard of ponytail's measured benchmark impact — less code, less cost, more speed.
+disable-model-invocation: true
 ---
 
 # Ponytail Gain
 
-Display this scoreboard when invoked. One-shot: do NOT change mode, write flag
-files, or persist anything.
+Display only — leave the active mode, the flag file, and any stored state
+exactly as they were.
 
 The figures are the published benchmark medians (5 everyday tasks: email
 validator, debounce, CSV sum, countdown timer, rate limiter; three models:
@@ -46,5 +42,4 @@ this card points there instead of inventing one.
 
 ## Boundaries
 
-One-shot display. Edits nothing, changes no mode.
-"stop ponytail" or "normal mode": revert.
+Render the card, then stop. There is no mode to revert — this skill never set one.

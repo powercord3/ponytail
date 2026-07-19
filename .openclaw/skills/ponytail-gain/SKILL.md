@@ -7,8 +7,8 @@ license: MIT
 
 # Ponytail Gain
 
-Display this scoreboard when invoked. One-shot: do NOT change mode, write flag
-files, or persist anything.
+Display only — leave the active mode, the flag file, and any stored state
+exactly as they were.
 
 The figures are the published benchmark medians (5 everyday tasks: email
 validator, debounce, CSV sum, countdown timer, rate limiter; three models:
@@ -43,5 +43,4 @@ this card points there instead of inventing one.
 
 ## Boundaries
 
-One-shot display. Edits nothing, changes no mode.
-"stop ponytail" or "normal mode": revert.
+Render the card, then stop. There is no mode to revert — this skill never set one.
